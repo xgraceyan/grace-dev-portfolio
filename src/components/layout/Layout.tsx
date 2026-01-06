@@ -8,7 +8,7 @@ export default function Layout() {
         <Navbar />
       </div>
 
-      <div className="mx-auto max-w-7xl pt-16 px-16 sm:px-24 lg:px-48">
+      <div className="mx-auto pt-16 px-12 md:px-16 xl:px-72">
         <Outlet />
       </div>
     </div>
