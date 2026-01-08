@@ -44,7 +44,7 @@ export default function WindowFrame({
             deleting ? "animate-[pulse_0.75s_linear_infinite]" : ""
           }`}
         >
-          {deleting ? "deleting :(" : title}
+          {deleting ? "closing :(" : title}
         </span>
 
         <X className="hover:cursor-pointer" onClick={handleClose} />

@@ -1,10 +1,12 @@
 import {
   IconBrandGithub,
   IconBrandLinkedin,
-  IconFileDescription,
   IconMail,
 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
+import { PDFViewerDialog } from "../utils/PDFViewer";
+import useIsMobile from "@/hooks/useIsMobile";
+import { RESUME_DRIVE_ID } from "@/lib/constants";
 
 export function GitHubLink() {
   return (
@@ -42,24 +44,30 @@ export function EmailLink() {
   );
 }
 
-export function ResumeLink() {
-  return (
-    <Link
-      to="https://drive.google.com/file/d/152H52lGPIvvRxQNgV6UbhZG7wV3Junhx/view?usp=drive_link"
-      className="nav-link glow text-primary flex flex-row items-center gap-2"
-      target="_blank"
-    >
-      <IconFileDescription /> Resume
-    </Link>
-  );
-}
-
 export default function ContactLinks() {
+  const isMobile = useIsMobile();
+
   return (
-    <div className="flex flex-col gap-8">
-      <ResumeLink />
-      <div className="flex flex-row gap-2 text-sm md:gap-6 md:text-lg">
-        <GitHubLink /> / <LinkedInLink /> / <EmailLink />
+    <div className="flex flex-col gap-4">
+      <PDFViewerDialog
+        buttonLabel="Resume"
+        fileLabel="Resume.pdf"
+        fileId={RESUME_DRIVE_ID}
+        width={isMobile ? 400 : 800}
+      />
+      <div>
+        {isMobile ? (
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-row gap-2">
+              <GitHubLink /> / <LinkedInLink />
+            </div>
+            <EmailLink />
+          </div>
+        ) : (
+          <div className="flex flex-row gap-2 text-sm md:gap-6 md:text-lg">
+            <GitHubLink /> / <LinkedInLink /> / <EmailLink />
+          </div>
+        )}
       </div>
     </div>
   );

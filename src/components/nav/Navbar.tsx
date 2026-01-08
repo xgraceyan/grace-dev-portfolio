@@ -32,7 +32,7 @@ export default function Navbar() {
             const active = location.pathname === link.path;
 
             return (
-              <NavigationMenuItem>
+              <NavigationMenuItem key={link.path}>
                 <NavigationMenuLink asChild>
                   <Link
                     to={link.path}
