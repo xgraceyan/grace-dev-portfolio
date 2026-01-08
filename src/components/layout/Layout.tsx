@@ -3,7 +3,7 @@ import Navbar from "../nav/Navbar";
 
 export default function Layout() {
   return (
-    <div className="min-h-screen min-w-screen">
+    <div className="min-h-screen">
       <div className="px-8 pt-4">
         <Navbar />
       </div>
