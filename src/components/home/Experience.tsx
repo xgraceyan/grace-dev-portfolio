@@ -25,7 +25,7 @@ interface ExperienceCardProps {
 function ExperienceCard({ experience, key }: ExperienceCardProps) {
   return (
     <Card
-      className="flex flex-row hover:shadow-black/20 hover:shadow-xl hover:cursor-pointer transition-shadow duration-200"
+      className="flex flex-row py-6 hover:shadow-black/20 hover:shadow-xl hover:cursor-pointer transition-shadow duration-200"
       key={key}
     >
       <div className="flex-shrink-0 ps-6">

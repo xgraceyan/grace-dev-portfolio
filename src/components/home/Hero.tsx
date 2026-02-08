@@ -51,7 +51,11 @@ export default function Hero() {
         <ContactButtons />
       </div>
 
-      <WindowFrame title="me.jpg" className="inline-flex">
+      <WindowFrame
+        title="me.jpg"
+        className="inline-flex"
+        showCloseButton={true}
+      >
         <img
           src="me.jpg"
           className="w-[300px] md:w-[1000px] max-w-full h-auto"

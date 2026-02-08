@@ -6,12 +6,14 @@ interface WindowFrameProps {
   title?: string;
   children: React.ReactNode;
   className?: string;
+  showCloseButton?: boolean;
 }
 
 export default function WindowFrame({
   title,
   children,
   className,
+  showCloseButton,
 }: WindowFrameProps) {
   const [visible, setVisible] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
@@ -35,7 +37,7 @@ export default function WindowFrame({
         `inline-flex flex-col rounded-xl border bg-background shadow-lg overflow-hidden transition-opacity duration-500 ${
           fadeOut ? "opacity-0" : "opacity-100"
         }`,
-        className
+        className,
       )}
     >
       <div className="flex items-center justify-between h-10 px-3 border-b bg-muted/15 w-full">
@@ -47,7 +49,9 @@ export default function WindowFrame({
           {deleting ? "closing :(" : title}
         </span>
 
-        <X className="hover:cursor-pointer" onClick={handleClose} />
+        {showCloseButton && (
+          <X className="hover:cursor-pointer" onClick={handleClose} />
+        )}
       </div>
 
       <div className="">{children}</div>

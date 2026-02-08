@@ -177,4 +177,20 @@ button {
     filter: drop-shadow(0 0 16px var(--primary));
     border-color: var(--primary);
   }
+
+  .color-picker-circle {
+    padding: 0;
+    overflow: hidden;
+  }
+  .color-picker-circle::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+  .color-picker-circle::-webkit-color-swatch {
+    border: none;
+    border-radius: 50%;
+  }
+  .color-picker-circle::-moz-color-swatch {
+    border: none;
+    border-radius: 50%;
+  }
 }
