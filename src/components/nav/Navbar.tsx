@@ -6,18 +6,17 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Link, useLocation } from "react-router-dom";
 
-interface NavLinks {
-  name: string;
-  path: string;
-}
+const internalLinks = [
+  { name: "Home", path: "/" },
+  { name: "Projects", path: "/projects" },
+];
+
+const externalLinks = [
+  { name: "GitHub", href: "https://github.com/xgraceyan" },
+  { name: "LinkedIn", href: "https://linkedin.com/in/grace-yan89" },
+];
 
 export default function Navbar() {
-  const links: NavLinks[] = [
-    { name: "Home", path: "/" },
-    { name: "Projects", path: "/projects" },
-    { name: "Contact", path: "/contact" },
-  ];
-
   const location = useLocation();
 
   return (
@@ -28,9 +27,8 @@ export default function Navbar() {
 
       <NavigationMenu>
         <NavigationMenuList>
-          {links.map((link) => {
+          {internalLinks.map((link) => {
             const active = location.pathname === link.path;
-
             return (
               <NavigationMenuItem key={link.path}>
                 <NavigationMenuLink asChild>
@@ -44,6 +42,21 @@ export default function Navbar() {
               </NavigationMenuItem>
             );
           })}
+
+          {externalLinks.map(({ name, href }) => (
+            <NavigationMenuItem key={name}>
+              <NavigationMenuLink asChild>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="nav-link"
+                >
+                  {name}
+                </a>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          ))}
         </NavigationMenuList>
       </NavigationMenu>
     </div>

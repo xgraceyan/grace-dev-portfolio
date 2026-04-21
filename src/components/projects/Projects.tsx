@@ -1,131 +1,110 @@
-export interface Project {
-  id: number;
-  title: string;
-  description: string;
-  tags: string[];
-  imgUrl: string;
-  viewUrl: string | null;
-  githubUrl: string;
-}
+import { useState, useMemo } from "react";
+import { getTagColor } from "@/lib/tagUtils";
+import ProjectsCard from "./ProjectsCard";
+import { projects } from "./projectsData";
 
-export const projects: Project[] = [
-  {
-    id: 1,
-    title: "Pull Up",
-    description:
-      "An availability planner that supports week/day/time calendar modes, drag-to-select, and username-password authentication.",
-    tags: ["reactjs", "typescript", "springboot", "mongodb"],
-    imgUrl: "./projects/pull-up.png",
-    viewUrl: "https://pullup.graceyan.me",
-    githubUrl: "https://github.com/xgraceyan/pull-up",
-  },
-  {
-    id: 2,
-    title: "Be Well",
-    description:
-      "A friendly companion that helps you schedule medication, track moods, and encourages a healthy lifestyle. Submission for IrvineHacks 2025",
-    tags: [
-      "reactjs",
-      "javascript",
-      "fastapi(python)",
-      "google cloud vision api",
-    ],
-    imgUrl: "./projects/be-well.jpg",
-    viewUrl: "https://devpost.com/software/bewell-b1an9m",
-    githubUrl: "https://github.com/xgraceyan/be-well/tree/master",
-  },
-  {
-    id: 3,
-    title: "Go Zot Go!",
-    description:
-      "A public transportation navigator with user-recommended routes and experiences, to help find the best way from A to B. Top 9 finalist for WebJam 2025",
-    tags: ["reactjs", "javascript", "fastapi(python)", "google maps api"],
-    imgUrl: "./projects/pull-up.png",
-    viewUrl: "https://pullup.graceyan.me", // TODO: Replace with deployed site url
-    githubUrl: "https://github.com/xgraceyan/go-zot-go",
-  },
-  {
-    id: 4,
-    title: "Ask a Cougar",
-    description:
-      "Ask a Cougar is web app developed as part of a service project to help answer questions about the high school experience. Used by over 300 students at Evergreen Valley High School and 200 middle school students.",
-    tags: ["reactjs", "supabase", "html", "css"],
-    imgUrl: "./projects/ask-a-cougar.png",
-    viewUrl: "https://askacougar.graceyan.me",
-    githubUrl: "https://github.com/xgraceyan/ask-a-cougar",
-  },
-  {
-    id: 5,
-    title: "Musication",
-    description:
-      "Musication is a website that aims to expose people to the various types of instruments in a classical setting. Second Place, Ctrl+Shift 2022.",
-    tags: ["reactjs", "html", "css"],
-    imgUrl: "./projects/musication.png",
-    viewUrl: "https://musication.graceyan.me",
-    githubUrl: "https://github.com/xgraceyan/musication",
-  },
-  {
-    id: 6,
-    title: "WhizFin",
-    description:
-      "I developed and currently maintain the official website for WhizFin, a 501(c)3 nonprofit that aims to educate people on financial literacy.",
-    tags: ["reactjs", "firebase", "html", "css"],
-    imgUrl: "./projects/whizfin.png",
-    viewUrl: "https://whizfin.graceyan.me",
-    githubUrl: "https://github.com/xgraceyan/whizfin-ui",
-  },
-  {
-    id: 7,
-    title: "Educated Brainstorm",
-    description:
-      "Educated Brainstorm is a web app developed by me and my hackathon teammates as a hybrid work solution with a task management and point system. Entry for 2022 Cisco Bridgehacks (Cisco High School Shadow Program).",
-    tags: ["reactjs", "firebase", "html", "css"],
-    imgUrl: "./projects/educated-brainstorm.png",
-    viewUrl: "https://educatedbrainstorm.graceyan.me/",
-    githubUrl: "https://github.com/xgraceyan/cisco-bridgehacks-8",
-  },
-  {
-    id: 8,
-    title: "Growing Tree",
-    description:
-      "An online school from the cloud. This project was my first React web application and is undergoing heavy modification right now.",
-    tags: ["reactjs", "firebase", "html", "css"],
-    imgUrl: "./projects/growingtree-2.png",
-    viewUrl: "https://growingtree.graceyan.me",
-    githubUrl: "https://github.com/xgraceyan/growingtree-old",
-  },
-  {
-    id: 9,
-    title: "Kore",
-    description:
-      "Kore is a multipurpose discord bot that is extremely customizable with moderation, economy, and fun features and commands. Hosting servers are down but the website and source code are still accessible.",
-    tags: ["discord.js", "mysql"],
-    imgUrl: "./projects/kore.png",
-    viewUrl: "https://kore.graceyan.me",
-    githubUrl: "https://github.com/xgraceyan/kore",
-  },
-  {
-    id: 10,
-    title: "StreamControlMC",
-    description:
-      "Plug-in to integrate Twitch live chat with Minecraft in-game events. Used by multiple Twitch livestreamers with >6k subscribers.",
-    tags: ["java", "twitch4j", "bukkit api"],
-    imgUrl: "./projects/streamcontrolmc.png",
-    viewUrl: null,
-    githubUrl: "https://github.com/xgraceyan/StreamControlMC",
-  },
-  {
-    id: 11,
-    title: "MCBingo",
-    description:
-      "A Minecraft plug-in to play bingo on servers, with dynamic GUI and multiplayer support.",
-    tags: ["java", "bukkit api"],
-    imgUrl: "./projects/mcbingo.png",
-    viewUrl: null,
-    githubUrl: "https://github.com/xgraceyan/MCBingo",
-  },
-];
+const tagFrequency = projects
+  .flatMap((p) => p.tags)
+  .reduce<Record<string, number>>((acc, tag) => {
+    acc[tag] = (acc[tag] ?? 0) + 1;
+    return acc;
+  }, {});
+
+const allTags = Object.keys(tagFrequency).sort(
+  (a, b) => tagFrequency[b] - tagFrequency[a]
+);
 
 export default function Projects() {
-  return <div>Hello world</div>;
+  const [search, setSearch] = useState("");
+  const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
+
+  function toggleTag(tag: string) {
+    setActiveTags((prev) => {
+      const next = new Set(prev);
+      if (next.has(tag)) {
+        next.delete(tag);
+      } else {
+        next.add(tag);
+      }
+      return next;
+    });
+  }
+
+  const filtered = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    return projects.filter((project) => {
+      const matchesSearch =
+        !query ||
+        project.title.toLowerCase().includes(query) ||
+        project.description.toLowerCase().includes(query) ||
+        project.tags.some((t) => t.toLowerCase().includes(query));
+
+      const matchesTags =
+        activeTags.size === 0 || project.tags.some((t) => activeTags.has(t));
+
+      return matchesSearch && matchesTags;
+    });
+  }, [search, activeTags]);
+
+  return (
+    <div className="flex flex-col gap-8 pb-16">
+      <div className="flex flex-col gap-2">
+        <h2 className="font-bold text-3xl">Projects</h2>
+        <p className="text-secondary font-light text-sm">
+          {filtered.length} of {projects.length} projects
+        </p>
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <input
+          type="text"
+          placeholder="Search projects or technologies..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full rounded-lg border border-secondary/20 bg-secondary/5 px-4 py-2.5 text-sm text-foreground placeholder:text-secondary/40 focus:border-primary/50 focus:outline-none transition-colors duration-200"
+        />
+
+        <div className="flex flex-wrap gap-2">
+          {allTags.map((tag) => {
+            const color = getTagColor(tag);
+            const isActive = activeTags.has(tag);
+            return (
+              <button
+                key={tag}
+                onClick={() => toggleTag(tag)}
+                className={`px-3 py-1 text-xs rounded-md transition-all duration-200 cursor-pointer ${
+                  isActive
+                    ? `${color.text} bg-secondary/20 border border-current/30 [filter:drop-shadow(0_0_6px_currentColor)]`
+                    : "text-secondary/50 bg-secondary/5 border border-transparent hover:text-secondary/80 hover:bg-secondary/15"
+                }`}
+              >
+                {tag}
+              </button>
+            );
+          })}
+          {activeTags.size > 0 && (
+            <button
+              onClick={() => setActiveTags(new Set())}
+              className="px-3 py-1 text-xs rounded-md text-secondary/40 hover:text-secondary/70 transition-colors duration-200 cursor-pointer"
+            >
+              clear all
+            </button>
+          )}
+        </div>
+      </div>
+
+      {filtered.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4">
+          {filtered.map((project) => (
+            <ProjectsCard key={project.id} project={project} />
+          ))}
+        </div>
+      ) : (
+        <div className="flex flex-col items-center gap-2 py-24 text-secondary/40">
+          <p className="text-lg font-semibold">No projects found</p>
+          <p className="text-sm">Try adjusting your search or filters</p>
+        </div>
+      )}
+    </div>
+  );
 }

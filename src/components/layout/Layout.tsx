@@ -14,6 +14,10 @@ export default function Layout() {
       <div className="relative z-10 mx-auto pt-16 px-4 md:px-16 xl:px-72">
         <Outlet />
       </div>
+
+      <footer className="relative z-10 py-12 text-center text-xs text-secondary/40">
+        Made with ❤️ by Grace Yan
+      </footer>
     </div>
   );
 }
