@@ -298,6 +298,25 @@ button {
   }
 }
 
+@property --primary {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #c792ea;
+}
+
+@keyframes primary-fade-in {
+  from {
+    --primary: #bfc7d5;
+  }
+  to {
+    --primary: #c792ea;
+  }
+}
+
+:root {
+  animation: primary-fade-in 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 @keyframes dot-wave-drift {
   0% {
     transform: translate3d(0, 0, 0) scale(1);
