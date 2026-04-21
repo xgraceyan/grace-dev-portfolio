@@ -154,6 +154,109 @@ button {
 }
 
 @layer components {
+  .active-bg {
+    background-color: var(--background);
+  }
+
+  .active-bg-dot-waves {
+    background-image: radial-gradient(
+        circle at center,
+        color-mix(in oklab, var(--primary) 45%, transparent) 1.1px,
+        transparent 1.8px
+      ),
+      radial-gradient(
+        circle at center,
+        color-mix(in oklab, var(--primary) 28%, transparent) 0.9px,
+        transparent 1.6px
+      );
+    background-size: 34px 34px, 22px 22px;
+    background-position: 0 0, 12px 8px;
+    opacity: 0.52;
+    animation: dot-wave-drift 22s linear infinite;
+    mask-image: radial-gradient(circle at 50% 50%, black 15%, transparent 85%);
+  }
+
+  .active-bg-ambient-glows {
+    filter: blur(8px);
+    opacity: 0.78;
+  }
+
+  .active-bg-ambient-glow {
+    position: absolute;
+    border-radius: 9999px;
+    background: radial-gradient(
+      circle at center,
+      color-mix(in oklab, var(--primary) 42%, transparent) 0%,
+      color-mix(in oklab, var(--primary) 24%, transparent) 40%,
+      transparent 72%
+    );
+    mix-blend-mode: screen;
+    animation: ambient-glow-float 20s ease-in-out infinite;
+  }
+
+  .active-bg-ambient-glow-1 {
+    width: 440px;
+    height: 440px;
+    left: -120px;
+    top: 9vh;
+    animation-duration: 24s;
+    animation-delay: -3s;
+  }
+
+  .active-bg-ambient-glow-2 {
+    width: 360px;
+    height: 360px;
+    right: 8vw;
+    top: -90px;
+    animation-duration: 19s;
+    animation-delay: -9s;
+  }
+
+  .active-bg-ambient-glow-3 {
+    width: 500px;
+    height: 500px;
+    right: -140px;
+    bottom: -170px;
+    animation-duration: 26s;
+    animation-delay: -6s;
+  }
+
+  .active-bg-ambient-glow-4 {
+    width: 320px;
+    height: 320px;
+    left: 34vw;
+    bottom: 5vh;
+    animation-duration: 17s;
+    animation-delay: -12s;
+  }
+
+  .active-bg-cursor-glow {
+    --cursor-x: 50vw;
+    --cursor-y: 50vh;
+    background: radial-gradient(
+        360px 360px at var(--cursor-x) var(--cursor-y),
+        color-mix(in oklab, var(--primary) 34%, transparent) 0%,
+        color-mix(in oklab, var(--primary) 16%, transparent) 35%,
+        transparent 75%
+      ),
+      radial-gradient(
+        720px 420px at var(--cursor-x) var(--cursor-y),
+        color-mix(in oklab, var(--primary) 10%, transparent) 0%,
+        transparent 70%
+      );
+    filter: blur(8px);
+    animation: glow-pulse 4.8s ease-in-out infinite;
+  }
+
+  .active-bg-vignette {
+    background: radial-gradient(
+      circle at center,
+      transparent 45%,
+      color-mix(in oklab, var(--background) 72%, black) 100%
+    );
+    opacity: 0.72;
+  }
+
   .nav-link {
     color: var(--secondary);
   }
@@ -192,5 +295,53 @@ button {
   .color-picker-circle::-moz-color-swatch {
     border: none;
     border-radius: 50%;
+  }
+}
+
+@keyframes dot-wave-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  25% {
+    transform: translate3d(18px, -12px, 0) scale(1.02);
+  }
+  50% {
+    transform: translate3d(-10px, 15px, 0) scale(1);
+  }
+  75% {
+    transform: translate3d(14px, 10px, 0) scale(1.015);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.66;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes ambient-glow-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.58;
+  }
+  25% {
+    transform: translate3d(32px, -24px, 0) scale(1.08);
+    opacity: 0.84;
+  }
+  50% {
+    transform: translate3d(-28px, 18px, 0) scale(0.93);
+    opacity: 0.66;
+  }
+  75% {
+    transform: translate3d(20px, 26px, 0) scale(1.04);
+    opacity: 0.8;
   }
 }
