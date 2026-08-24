@@ -35,7 +35,7 @@ function ExperienceCard({ experience, key }: ExperienceCardProps) {
           className="w-18 md:w-20 object-contain rounded-xl"
         />
       </div>
-      <div className="flex flex-col gap-2 justify-center">
+      <div className="flex flex-col gap-2 justify-center flex-1 min-w-0">
         <CardHeader>
           <CardTitle>
             <p className="text-lg">{experience.company}</p>
@@ -53,6 +53,26 @@ function ExperienceCard({ experience, key }: ExperienceCardProps) {
 
 export default function Experience() {
   const experiences: ExperienceItem[] = [
+    {
+      id: 0,
+      company: "Amazon Web Services (AWS)",
+      position: "Software Development Engineer Intern",
+      dates: "June 2026 - Sept 2026",
+      description: (
+        <p>
+          Interning on the{" "}
+          <a
+            href="https://aws.amazon.com/backup-restore/"
+            target="_blank"
+            className="link inline"
+          >
+            AWS S3 Backup
+          </a>{" "}
+          team.
+        </p>
+      ),
+      imgUrl: "./logos/aws.png",
+    },
     {
       id: 1,
       company: "Commit the Change",
