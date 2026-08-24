@@ -28,19 +28,26 @@ export default function Hero() {
               AntAlmanac
             </a>
             , a course planning app assisting over 15,000 Anteaters monthly. I'm
-            also developing internal tools for{" "}
+            also developing internal solutions for{" "}
             <a href="https://clchc.org" target="_blank" className="link">
               Celebrating Life Community Health Center
             </a>
             , a nonprofit dedicated to giving quality health care.
           </p>
           <p>
-            This summer, I will be working at{" "}
-            <a href="https://lumafield.com" target="_blank" className="link">
-              Lumafield
+            This summer, I am working at{" "}
+            <a
+              href="https://aws.amazon.com/backup-restore/"
+              target="_blank"
+              className="link"
+            >
+              Amazon Web Services
             </a>{" "}
-            as a <span className="font-bold">software engineering intern</span>{" "}
-            in their San Francisco office!
+            as a{" "}
+            <span className="font-bold">
+              software development engineering intern
+            </span>{" "}
+            in Seattle, WA.
           </p>
         </div>
 
